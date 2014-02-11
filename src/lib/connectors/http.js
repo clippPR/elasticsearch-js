@@ -165,6 +165,10 @@ HttpConnector.prototype.request = function (params, cb) {
     request.setHeader('Content-Length', Buffer.byteLength(params.body, 'utf8'));
     request.end(params.body);
   } else {
+    if (reqParams.method === 'POST' || reqParams.method === 'PUT' || reqParams.method === 'DELETE') {
+      //olderversions of nginx really want this.
+      request.setHeader('Content-Length', 0);
+    }
     request.end();
   }
 
